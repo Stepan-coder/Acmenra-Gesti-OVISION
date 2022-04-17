@@ -58,7 +58,7 @@ class FaceDetection:
             face.set_mesh_frame(frame=self.__face_mesh.show_faces(img=face.get_frame(), faces=face_mesh))
         return face
 
-    def get_face_distance(self, face: Face) -> Face:
+    def get_face_distance(se lf, face: Face) -> Face:
         face_points = face.get_mesh_points()
         point_145 = face_points[145]
         point_374 = face_points[374]
