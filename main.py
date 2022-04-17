@@ -19,16 +19,11 @@ while True:
     frame = np.zeros((height, width, 3), np.uint8)
     for i in range(len(people)):
         people[i] = face_recognition.face_mesh_detection(face=people[i])
-        people[i] = face_recognition.face_get_distance(face=people[i])
-        people[i].set_is_mask(face_recognition.face_mask_detection(people[i]))
+        people[i] = face_recognition.get_face_distance(face=people[i])
+        people[i] = face_recognition.face_mask_detection(face=people[i])
+        people[i] = face_recognition.get_face_agender(face=people[i])
         left, top, right, bottom = people[i].get_coordinates()
         frame[top:bottom, left:right] = people[i].get_frame()
-        # if left is not None:
-        #     if people[i].get_is_mask():
-        #         print("Ok!!")
-        #     else:
-        #         print("Non mask!!")
-        # print(top, bottom, left, right)
         frame = cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
     cv2.imshow("Face", frame)
     key = cv2.waitKey(1) & 0xFF

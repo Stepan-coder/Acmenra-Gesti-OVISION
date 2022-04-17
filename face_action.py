@@ -5,6 +5,7 @@ import math
 import numpy as np
 from face import *
 from face_mesh import *
+from pyagender import PyAgender
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -19,6 +20,7 @@ class FaceDetection:
         self.__face_net = cv2.dnn.readNet(prototxt_path, weights_path)
         self.__mask_net = load_model(mask_model_path)
         self.__face_mesh = FaceMeshDetector(max_num_faces=1)
+        self.__agender = PyAgender()
 
     def face_detection(self, frame):
         height, width, channels = frame.shape
@@ -56,13 +58,20 @@ class FaceDetection:
             face.set_mesh_frame(frame=self.__face_mesh.show_faces(img=face.get_frame(), faces=face_mesh))
         return face
 
-    def face_get_distance(self, face: Face) -> Face:
+    def get_face_distance(self, face: Face) -> Face:
         face_points = face.get_mesh_points()
         point_145 = face_points[145]
         point_374 = face_points[374]
         length = math.hypot(point_374['x'] - point_145['x'], point_374['y'] - point_145['y'])
         face.set_distance(distance=(6.4 * 840) / length)
         return face
+
+    def get_face_agender(self, face: Face) -> Face:
+        face_info = self.__agender.detect_genders_ages(face.get_frame())
+        face.set_age(age=round(face_info['age']))
+        face.set_gender(gender=face_info['gender'] > 0.5)
+        return face
+
 
 
 

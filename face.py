@@ -1,16 +1,4 @@
-# import time
-#
-# import cv2
-# from pyagender import PyAgender
-#
-#
-#
-# agender = PyAgender()
-# img = cv2.imread("123.png")
-# t1 = time.time()
-# face_info = agender.detect_genders_ages(img)
-# print(time.time() - t1)
-# print(face_info)
+
 
 
 class Face:
@@ -21,11 +9,15 @@ class Face:
         self.__top = int(top)
         self.__right = int(right)
         self.__bottom = int(bottom)
+        self.__age = None
+        self.__gender = None
         self.__distance = None
         self.__mesh_frame = None
         self.__mesh_points = None
         self.__is_mask = False
         self.__is_distance = False
+        self.__is_age = False
+        self.__is_gender = False
         self.__is_mesh_frame = False
         self.__is_mesh_points = False
         self.__is_descriptor = False
@@ -65,6 +57,24 @@ class Face:
         if not self.__is_distance:
             raise Exception('Distance is not exist yet!')
         return self.__distance
+
+    def set_age(self, age: float) -> None:
+        self.__age = age
+        self.__is_age = True
+
+    def get_age(self) -> float:
+        if not self.__is_age:
+            raise Exception('Age is not exist yet!')
+        return self.__age
+
+    def set_gender(self, gender: bool) -> None:
+        self.__gender = gender
+        self.__is_gender = True
+
+    def get_gender(self) -> bool:
+        if not self.__is_gender:
+            raise Exception('Gender is not exist yet!')
+        return self.__gender
 
     def set_mesh_frame(self, frame) -> None:
         self.__mesh_frame = frame
