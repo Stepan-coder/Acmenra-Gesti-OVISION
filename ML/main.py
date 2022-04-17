@@ -16,15 +16,32 @@ while True:
     ret, frame = camera.read()
     height, width, channels = frame.shape
     people = face_recognition.face_detection(frame=frame)
-    frame = np.zeros((height, width, 3), np.uint8)
+    # frame = np.zeros((height, width, 3), np.uint8)
     for i in range(len(people)):
         people[i] = face_recognition.face_mesh_detection(face=people[i])
         people[i] = face_recognition.get_face_distance(face=people[i])
         people[i] = face_recognition.face_mask_detection(face=people[i])
         people[i] = face_recognition.get_face_agender(face=people[i])
         left, top, right, bottom = people[i].get_coordinates()
-        frame[top:bottom, left:right] = people[i].get_frame()
+        frame[top:bottom, left:right] = people[i].get_mesh_frame()
         frame = cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
+        try:
+            print(f"age: {people[i].get_age()}")
+        except:
+            pass
+        try:
+            print(f"gender: {people[i].get_gender()}")
+        except:
+            pass
+        try:
+            print(f"distanse: {people[i].get_distance()}")
+        except:
+            pass
+        try:
+            print(f"mask: {people[i].get_is_mask()}")
+        except:
+            pass
+
     cv2.imshow("Face", frame)
     key = cv2.waitKey(1) & 0xFF
     if key == ord("q"):

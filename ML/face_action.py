@@ -31,8 +31,8 @@ class FaceDetection:
             if detections[0, 0, i, 2] > 0.5:
                 box = detections[0, 0, i, 3:7] * np.array([width, height, width, height])
                 left, top, right, bottom = box.astype("int")
-                horizontal_delta = int((right - left) * 0.2)
-                vertical_delta = int((bottom - top) * 0.3)
+                horizontal_delta = int((right - left) * 0.15)
+                vertical_delta = int((bottom - top) * 0.20)
                 left = left - horizontal_delta if left - horizontal_delta > 0 else 0
                 top = top - vertical_delta if top - vertical_delta > 0 else 0
                 right = right + horizontal_delta if right + horizontal_delta < width - 1 else width - 1
@@ -68,8 +68,11 @@ class FaceDetection:
 
     def get_face_agender(self, face: Face) -> Face:
         face_info = self.__agender.detect_genders_ages(face.get_frame())
-        face.set_age(age=round(face_info['age']))
-        face.set_gender(gender=face_info['gender'] > 0.5)
+        try:
+            face.set_age(age=round(face_info[0]['age']))
+            face.set_gender(gender=face_info[0]['gender'] > 0.5)
+        except:
+            pass
         return face
 
 
