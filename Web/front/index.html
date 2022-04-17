@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<header class="header">
+    <div class="logo">
+        <p><span class="logo-main">Ovision</span> Acmenra$Gesti</p>
+    </div>
+</header>
+<body>
+    <section class="main">
+        <div class="check">
+            <p class="param_elem">Параметры: </p>
+            <div class="switch-button">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+               <p class="slider-text-par">Наложение сетки</p>
+            </div>
+            <div class="switch-button">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+               <p class="slider-text-par">Проверка мед. маски</p>
+            </div>
+            <div class="switch-button">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+               <p class="slider-text-par">ХЗ</p>
+            </div>
+        </div>
+        <div class="video">
+            <img src="{{ url_for('video_feed') }}" width="100%">
+            <script>
+                var video = document.getElementById('video');
+        
+                // Получаем доступ к камере
+                if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Не включаем аудио опцией `{ audio: true }` поскольку сейчас мы работаем только с изображениями
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                        video.srcObject = stream;
+                        video.play();
+                    });
+                }
+            </script>
+        </div>
+        <div class="data">
+            <p>Данные:</p>
+            <p class="data-text">Эмоция: <span class="data-text-special">{{ emotion }}</span></p>
+            <p class="data-text">Возраст: <span class="data-text-special">{{ age }}</span></p>
+            <p class="data-text">Пол: <span class="data-text-special">{{ gender }}</span></p>
+        </div>
+    </section>
+</body>
+</html>
