@@ -1,5 +1,7 @@
 from flask import Flask, render_template, Response
 import cv2
+from ML.face import Face
+from ML.face_action import FaceDetection
 
 app = Flask(__name__)
 
@@ -17,18 +19,41 @@ def gen_frames():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 
-def update_image(img, show_dots:bool, med_mask:bool, distance:bool, gender:bool, age:bool):
-    if show_dots:
+def update_image(img, show_mesh:bool, med_mask:bool, distance:bool, gender:bool, age:bool):
+    
+    face_detect
+    face = Face()
+    
+    med_mask = "Не отслеживается"
+    distance = "Не отслеживается"
+    gender = "Не отслеживается"
+    age = "Не отслеживается"
+
+    if show_mesh:
         pass
+
     elif med_mask:
-        pass
+        if face.get_is_mask():
+            med_mask = "Надета"
+        else:
+            med_mask = "Отсутствует"
+        
     elif distance:
-        pass
+        distance = face.get_distance()
+
     elif gender:
-        pass
+        gender = face.get_gender()
+
     elif age:
-        pass
-    return img
+        age = face.get_age()
+
+    json = {
+        "mask": med_mask,
+        "distance": distance,
+        "gender": gender,
+        "age": age
+    }
+    return (img, json)
 
 
 
