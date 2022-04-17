@@ -70,7 +70,7 @@ class FaceDetection:
         face_info = self.__agender.detect_genders_ages(face.get_frame())
         try:
             face.set_age(age=round(face_info[0]['age']))
-            face.set_gender(gender=face_info[0]['gender'] > 0.5)
+            face.set_gender(gender="women" if face_info[0]['gender'] > 0.5 else "men")
         except:
             pass
         return face
