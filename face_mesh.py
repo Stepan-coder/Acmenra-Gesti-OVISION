@@ -21,7 +21,7 @@ class FaceMeshDetector:
                                                                min_detection_confidence=min_detection_confidence,
                                                                min_tracking_confidence=min_tracking_confidence)
 
-    def findFaceMesh(self, img) -> Dict[str, Dict[int, Dict[str, Any]] or Any]:
+    def find_face_mesh(self, img) -> Dict[str, Dict[int, Dict[str, Any]] or Any]:
         """
         This method finds the faces in the image and returns their parameters
         :param img:
@@ -66,17 +66,6 @@ class FaceMeshDetector:
         return img
 
 
-
-
-cap = cv2.VideoCapture(0)
-pTime = 0
-detector = FaceMeshDetector()
-while True:
-    success, img = cap.read()
-    faces = detector.findFaceMesh(img)
-    img = detector.show_faces(img, faces)
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
 
 
 
