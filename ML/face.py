@@ -67,11 +67,11 @@ class Face:
             raise Exception('Age is not exist yet!')
         return self.__age
 
-    def set_gender(self, gender: bool) -> None:
+    def set_gender(self, gender: str) -> None:
         self.__gender = gender
         self.__is_gender = True
 
-    def get_gender(self) -> bool:
+    def get_gender(self) -> str:
         if not self.__is_gender:
             raise Exception('Gender is not exist yet!')
         return self.__gender
